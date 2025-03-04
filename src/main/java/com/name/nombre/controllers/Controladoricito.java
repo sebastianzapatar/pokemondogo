@@ -22,4 +22,13 @@ public class Controladoricito {
         this.servicePokemon.addPokemon(pokemond);
         return pokemond;
     }
+    @GetMapping("/buscar/{id}")
+    public Pokemondongo buscar(@PathVariable Long id) {
+       return this.servicePokemon.getPokemonById(id)
+                .orElse(null);
+    }
+    @GetMapping("/buscarNombre/{nombre}")
+    public List<Pokemondongo> buscarNombre(@PathVariable String nombre) {
+        return this.servicePokemon.getPokemonByName(nombre);
+    }
 }
