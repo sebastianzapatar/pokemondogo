@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface IServicePokemon {
     public List<Pokemondongo> getPokemon();
-    public void addPokemon(Pokemondongo pokemon);
+    public Pokemondongo addPokemon(Pokemondongo pokemon);
     public Optional<Pokemondongo> getPokemonById(Long id);
     public List<Pokemondongo> getPokemonByName(String name);
 }

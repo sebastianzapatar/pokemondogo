@@ -2,14 +2,18 @@ package com.name.nombre.service;
 
 import com.name.nombre.modelo.Pokemondongo;
 import com.name.nombre.repository.IPokemondongoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Validated
 public class PokemonService implements IServicePokemon{
     @Autowired
     private IPokemondongoRepository pokemondongoRepository;
@@ -21,10 +25,14 @@ public class PokemonService implements IServicePokemon{
     }
 
     @Override
-    public void addPokemon(Pokemondongo pokemon) {
-
-       this.pokemondongoRepository.save(pokemon);
+    public Pokemondongo addPokemon(@Valid Pokemondongo pokemon) {
+        try {
+            return pokemondongoRepository.save(pokemon);
+        } catch (DataIntegrityViolationException e) {
+            throw new IllegalArgumentException("El nombre '" + pokemon.getNombre() + "' ya está en uso.");
+        }
     }
+
 
     @Override
     public Optional<Pokemondongo> getPokemonById(Long id) {

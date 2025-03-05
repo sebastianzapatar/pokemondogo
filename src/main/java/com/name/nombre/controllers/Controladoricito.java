@@ -4,7 +4,10 @@ import com.name.nombre.modelo.Pokemondongo;
 import com.name.nombre.service.IServicePokemon;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +25,9 @@ public class Controladoricito {
         return this.servicePokemon.getPokemon();
     }
     @PostMapping("/")
-    public Pokemondongo add(@RequestBody Pokemondongo pokemond) {
-        this.servicePokemon.addPokemon(pokemond);
-        return pokemond;
+    public ResponseEntity<Pokemondongo> createPokemon(@Valid @RequestBody Pokemondongo pokemon) {
+        Pokemondongo nuevoPokemon = this.servicePokemon.addPokemon(pokemon);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPokemon);
     }
     @GetMapping("/buscar/{id}")
     public Pokemondongo buscar(@PathVariable Long id) {
