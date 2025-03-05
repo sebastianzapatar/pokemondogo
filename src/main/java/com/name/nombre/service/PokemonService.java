@@ -26,11 +26,9 @@ public class PokemonService implements IServicePokemon{
 
     @Override
     public Pokemondongo addPokemon(@Valid Pokemondongo pokemon) {
-        try {
+
             return pokemondongoRepository.save(pokemon);
-        } catch (DataIntegrityViolationException e) {
-            throw new IllegalArgumentException("El nombre '" + pokemon.getNombre() + "' ya está en uso.");
-        }
+        
     }
 
 
